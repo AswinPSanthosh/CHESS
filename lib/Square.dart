@@ -12,11 +12,13 @@ class Square extends StatelessWidget {
     required this.iswhite,
     required this.piece,
     required this.isSelected,
+    required this.isValid,
     required this.onTap,
   }) : super(key: key);
 final bool iswhite;
 final Chesspiece? piece;
 final bool isSelected;
+final bool isValid;
 final void Function()? onTap;
 
 
@@ -29,7 +31,11 @@ Color? squarecolor;
 if (isSelected) {
   squarecolor = Colors.green;
   
-} else {
+}
+else if(isValid){
+squarecolor = const Color.fromARGB(255, 2, 80, 4);
+}
+ else {
   squarecolor = iswhite?squireWhite:squireBlack;
 }
     return GestureDetector(

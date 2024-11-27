@@ -38,12 +38,62 @@ int selectedCol = -1;
           selectedPiece = board[row][col];
           selectedRow= row;
           selectedCol = col;
-        } else {
-          
-        }
+        } 
+         validMoves = rowValidmoves(selectedRow, selectedCol ,selectedPiece);
       });
+      // calculate valid moves for selected piece 
+     
 
     }
+
+
+// calculate row valid moves
+ List<List<int>>rowValidmoves(int row , int col, Chesspiece? piece){
+   List<List<int>> candidateMOves = [];
+   int direction = piece!.iswhite ? -1 : 1;
+
+   switch (piece.type) {
+     case ChessPieceType.pawn:
+       //going one stepp up
+
+       if(isInBoard(row + direction, col)&& board[row + direction][col] == null){
+        candidateMOves.add([row + direction , col]);
+       }
+
+
+       // going 2 moves
+        if((row == 1 && !piece.iswhite) || (row == 6 && piece.iswhite)){
+           if(isInBoard(row + 2*direction, col) && board[row + 2*direction][col] == null){
+        candidateMOves.add([row + 2*direction , col]);
+       }
+        }
+       break;
+       case ChessPieceType.rook:
+       
+       break;
+       case ChessPieceType.bishop:
+       
+       break;
+       case ChessPieceType.king:
+       
+       break;
+       case ChessPieceType.knight:
+       
+       break;
+       case ChessPieceType.queen:
+       
+       break;
+
+     default:
+   }
+   return candidateMOves;
+ }
+
+
+
+    //valid mooves 
+
+    List<List<int>> validMoves =[];
 
   void _initialiseBoard(){
 
@@ -128,11 +178,19 @@ late List<List<Chesspiece?>>board;
                 int col = index%8;
 
               bool isSelected = selectedRow==row && selectedCol == col;
+
+              bool isValidmove = false;
+              for(var position in validMoves){
+                if (position[0] == row && position[1] == col) {
+                  isValidmove = true;
+                }
+              }
                 return Padding(
                   padding: const EdgeInsets.all(1.0),
                   child: Square(iswhite: isWhite(index),
                   piece: board[row][col],
                   isSelected: isSelected,
+                  isValid: isValidmove,
                   onTap: ()=>pieceSelected(row, col)
                   ),
                 );
