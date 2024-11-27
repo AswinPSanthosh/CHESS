@@ -50,6 +50,7 @@ int selectedCol = -1;
 // calculate row valid moves
  List<List<int>>rowValidmoves(int row , int col, Chesspiece? piece){
    List<List<int>> candidateMOves = [];
+   
    int direction = piece!.iswhite ? -1 : 1;
 
    switch (piece.type) {
@@ -63,10 +64,29 @@ int selectedCol = -1;
 
        // going 2 moves
         if((row == 1 && !piece.iswhite) || (row == 6 && piece.iswhite)){
-           if(isInBoard(row + 2*direction, col) && board[row + 2*direction][col] == null){
+           if(isInBoard(row + 2*direction, col) && board[row + 2*direction][col] == null && board[row + direction][col] == null){
         candidateMOves.add([row + 2*direction , col]);
        }
         }
+
+        // kill diagonally
+        // killing in left direction
+if (isInBoard(row + direction, col - 1) &&
+    board[row + direction][col - 1] != null &&
+    board[row + direction][col - 1]!.iswhite != piece.iswhite) {
+  candidateMOves.add([row + direction, col - 1]);
+}
+
+// killing in right direction
+if (isInBoard(row + direction, col + 1) &&
+    board[row + direction][col + 1] != null &&
+    board[row + direction][col + 1]!.iswhite != piece.iswhite) {
+  candidateMOves.add([row + direction, col + 1]);
+}
+
+
+
+       
        break;
        case ChessPieceType.rook:
        
@@ -111,6 +131,12 @@ for (int i =0 ; i<8; i++)
   newboard[6][i]=Chesspiece(type: ChessPieceType.pawn, iswhite: true,  imagepathw: 'assets/pieces/pawnw.png', imagepathb: 'assets/pieces/pawnb.png');
 
 }
+
+
+//condition checking , revome afterwards
+newboard[2][2]=Chesspiece(type: ChessPieceType.rook, iswhite: true,  imagepathw: 'assets/pieces/rookw.png', imagepathb: 'assets/pieces/rookb.png');
+
+
 //rook
  newboard[0][0]=Chesspiece(type: ChessPieceType.rook, iswhite: false,  imagepathw: 'assets/pieces/rookw.png', imagepathb: 'assets/pieces/rookb.png');
   newboard[0][7]=Chesspiece(type: ChessPieceType.rook, iswhite: false,  imagepathw: 'assets/pieces/rookw.png', imagepathb: 'assets/pieces/rookb.png'); 
@@ -174,8 +200,8 @@ late List<List<Chesspiece?>>board;
               itemBuilder: (BuildContext context, int index) {
 
 
-                int row = index ~/8;
-                int col = index%8;
+                int row = index ~/ 8;
+                int col = index % 8;
 
               bool isSelected = selectedRow==row && selectedCol == col;
 
