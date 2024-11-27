@@ -7,11 +7,13 @@ class Chesspiece {
   final bool iswhite;
   final String imagepathw;
   final String imagepathb;
+
   Chesspiece({
     required this.type,
     required this.iswhite,
     required this.imagepathw,
     required this.imagepathb,
+
   });
   
 }

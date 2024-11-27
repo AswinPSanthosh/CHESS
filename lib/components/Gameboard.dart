@@ -17,12 +17,39 @@ class _BoardState extends State<Board> {
 
 
 
+Chesspiece? selectedPiece;
+//no row selected
+int selectedRow = -1;
+
+//no column selected
+int selectedCol = -1;
+
+
   void initState() {
     super.initState();
     _initialiseBoard();
     
   }
+
+
+  void pieceSelected(int row , int col){
+      setState(() {
+        if (board[row][col]!=null) {
+          selectedPiece = board[row][col];
+          selectedRow= row;
+          selectedCol = col;
+        } else {
+          
+        }
+      });
+
+    }
+
   void _initialiseBoard(){
+
+
+
+  
 List<List<Chesspiece?>>newboard = List.generate(8, (index)=>List.generate(8, (index)=> null));
 
 
@@ -99,10 +126,15 @@ late List<List<Chesspiece?>>board;
 
                 int row = index ~/8;
                 int col = index%8;
+
+              bool isSelected = selectedRow==row && selectedCol == col;
                 return Padding(
                   padding: const EdgeInsets.all(1.0),
                   child: Square(iswhite: isWhite(index),
-                  piece: board[row][col],),
+                  piece: board[row][col],
+                  isSelected: isSelected,
+                  onTap: ()=>pieceSelected(row, col)
+                  ),
                 );
               },
             ),
