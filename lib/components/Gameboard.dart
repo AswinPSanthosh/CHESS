@@ -30,6 +30,10 @@ class _BoardState extends State<Board> {
         selectedRow = row;
         selectedCol = col;
       }
+      else if(selectedPiece!=null && validMoves.any((element) => element[0]==row && element[1]== col)){
+        movePiece(row, col);
+
+      }
       validMoves = rowValidmoves(selectedRow, selectedCol, selectedPiece);
     });
     // calculate valid moves for selected piece
@@ -40,6 +44,10 @@ class _BoardState extends State<Board> {
     List<List<int>> candidateMOves = [];
 
     int direction = piece!.iswhite ? -1 : 1;
+    // if (piece == null) {
+    //   return[];
+      
+    // }
 
     switch (piece.type) {
       case ChessPieceType.pawn:
@@ -346,6 +354,22 @@ class _BoardState extends State<Board> {
   }
 
   late List<List<Chesspiece?>> board;
+
+
+void movePiece(int newRow, int newcol){
+board[newRow][newcol] = selectedPiece;
+board[selectedRow][selectedCol]=null;
+
+
+setState(() {
+  selectedPiece = null;
+  selectedRow = -1;
+  selectedCol = -1;
+  validMoves = []; 
+});
+}
+
+
 
   @override
   Widget build(BuildContext context) {
