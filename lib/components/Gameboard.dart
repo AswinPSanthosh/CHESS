@@ -164,8 +164,8 @@ class _BoardState extends State<Board> {
 
         break;
       case ChessPieceType.king:
-      var directions = [
-           [-1, -1], 
+     var directions = [
+          [-1, -1], 
           [-1, 1],
           [1, -1], 
           [1, 1] ,
@@ -174,21 +174,22 @@ class _BoardState extends State<Board> {
           [0, -1], //left
           [0, 1] //right
         ];
-        for (var dir in directions) {
-         
-            var newRow = row +  dir[0];
-            var newcol = col +  dir[1];
+         for (var dir in directions) {
+
+
+            var newRow = row + dir[0];
+            var newcol = col + dir[1];
             if (!isInBoard(newRow, newcol)) {
-              break;
+              continue;
             }
             if (board[newRow][newcol] != null) {
               if (board[newRow][newcol]!.iswhite != piece.iswhite) {
                 candidateMOves.add([newRow, newcol]);
               }
-              break;
+              continue;
             }
             candidateMOves.add([newRow, newcol]);
-          
+
         }
 
         break;
