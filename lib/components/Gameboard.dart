@@ -2,6 +2,7 @@ import 'package:chess/Model.dart';
 import 'package:chess/Square.dart';
 import 'package:chess/components/chesspiece.dart';
 import 'package:chess/components/colors.dart';
+import 'package:chess/components/deadpiece.dart';
 import 'package:flutter/material.dart';
 
 class Board extends StatefulWidget {
@@ -18,6 +19,13 @@ class _BoardState extends State<Board> {
 //no column selected
   int selectedCol = -1;
 
+
+
+  // captured pieces
+  List<Chesspiece> blackPieceCaptured=[];
+  List<Chesspiece> whitePieceCaptured=[];
+
+
   void initState() {
     super.initState();
     _initialiseBoard();
@@ -25,10 +33,16 @@ class _BoardState extends State<Board> {
 
   void pieceSelected(int row, int col) {
     setState(() {
-      if (board[row][col] != null) {
+      if (selectedPiece == null && board[row][col] != null) {
         selectedPiece = board[row][col];
         selectedRow = row;
         selectedCol = col;
+      }
+      else if(board[row][col] != null &&board[row][col]!.iswhite == selectedPiece!.iswhite){
+        selectedPiece = board[row][col];
+        selectedRow = row;
+        selectedCol = col;
+
       }
       else if(selectedPiece!=null && validMoves.any((element) => element[0]==row && element[1]== col)){
         movePiece(row, col);
@@ -252,15 +266,6 @@ class _BoardState extends State<Board> {
           imagepathw: 'assets/pieces/pawnw.png',
           imagepathb: 'assets/pieces/pawnb.png');
     }
-
-//condition checking , revome afterwards
-   
-        newboard[3][2] = Chesspiece(
-        type: ChessPieceType.king,
-        iswhite: false,
-        imagepathw: 'assets/pieces/kingw.png',
-        imagepathb: 'assets/pieces/kingb.png');
-
 //rook
     newboard[0][0] = Chesspiece(
         type: ChessPieceType.rook,
@@ -358,6 +363,19 @@ class _BoardState extends State<Board> {
 
 
 void movePiece(int newRow, int newcol){
+// adding captured piece to list
+if (board[newRow][newcol]!=null) {
+  var capturedPiece = board[newRow][newcol];
+  if (capturedPiece!.iswhite) {
+    whitePieceCaptured.add(capturedPiece);
+    
+  }
+  else{
+    blackPieceCaptured.add(capturedPiece);
+  }
+  
+}
+
 board[newRow][newcol] = selectedPiece;
 board[selectedRow][selectedCol]=null;
 
@@ -376,42 +394,71 @@ setState(() {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Center(
-          child: Container(
-            width: 368,
-            height: 368,
-            decoration:
-                BoxDecoration(border: Border.all(color: boardcolor, width: 10)),
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 8,
+        child: Column(
+          children: [
+            Expanded(
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 8,
+                ),
+                itemCount: whitePieceCaptured.length,
+                itemBuilder: (BuildContext context, int index)=>Deadpiece(
+                  imagepath: whitePieceCaptured[index].imagepathw,
+                  iswhite: true,
+                ),
               ),
-              itemCount: 8 * 8,
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (BuildContext context, int index) {
-                int row = index ~/ 8;
-                int col = index % 8;
-
-                bool isSelected = selectedRow == row && selectedCol == col;
-
-                bool isValidmove = false;
-                for (var position in validMoves) {
-                  if (position[0] == row && position[1] == col) {
-                    isValidmove = true;
-                  }
-                }
-                return Padding(
-                  padding: const EdgeInsets.all(1.0),
-                  child: Square(
-                      iswhite: isWhite(index),
-                      piece: board[row][col],
-                      isSelected: isSelected,
-                      isValid: isValidmove,
-                      onTap: () => pieceSelected(row, col)),
-                );
-              },
             ),
-          ),
+            Center(
+              child: Container(
+                width: 368,
+                height: 368,
+                decoration:
+                    BoxDecoration(border: Border.all(color: boardcolor, width: 10)),
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 8,
+                  ),
+                  itemCount: 8 * 8,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (BuildContext context, int index) {
+                    int row = index ~/ 8;
+                    int col = index % 8;
+            
+                    bool isSelected = selectedRow == row && selectedCol == col;
+            
+                    bool isValidmove = false;
+                    for (var position in validMoves) {
+                      if (position[0] == row && position[1] == col) {
+                        isValidmove = true;
+                      }
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.all(1.0),
+                      child: Square(
+                          iswhite: isWhite(index),
+                          piece: board[row][col],
+                          isSelected: isSelected,
+                          isValid: isValidmove,
+                          onTap: () => pieceSelected(row, col)),
+                    );
+                  },
+                ),
+              ),
+            ),
+            Expanded(
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 8,
+                ),
+                itemCount: blackPieceCaptured.length,
+                itemBuilder: (BuildContext context, int index)=>Deadpiece(
+                  imagepath: blackPieceCaptured[index].imagepathb,
+                  iswhite: false,
+                ),
+              ),
+            ),
+            
+          ],
         ),
       ),
     );
