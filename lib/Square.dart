@@ -13,21 +13,40 @@ class Square extends StatelessWidget {
     required this.isSelected,
     required this.isValid,
     required this.onTap,
+    this.isKingInCheck = false,        // New parameter
+    this.isInvalidKingMove = false,    // New parameter
+    this.isKingTile = false,
   }) : super(key: key);
   final bool iswhite;
   final Chesspiece? piece;
   final bool isSelected;
   final bool isValid;
   final void Function()? onTap;
-
+final bool isKingInCheck;
+  final bool isInvalidKingMove;
+  final bool isKingTile;
   @override
   Widget build(BuildContext context) {
     Color? squarecolor;
-    if (isSelected) {
+
+    // Highlight king's tile in red if in check
+    if (isKingTile && isKingInCheck) {
+      squarecolor = Colors.red;
+    }
+    // Highlight invalid king moves in red
+    else if (isInvalidKingMove) {
+      squarecolor = Colors.red.withOpacity(0.5);
+    }
+    // Highlight selected squares
+    else if (isSelected) {
       squarecolor = Colors.green;
-    } else if (isValid) {
+    }
+    // Highlight valid move squares
+    else if (isValid) {
       squarecolor = const Color.fromARGB(255, 2, 80, 4);
-    } else {
+    }
+    // Default square colors
+    else {
       squarecolor = iswhite ? squireWhite : squireBlack;
     }
     return GestureDetector(
@@ -43,3 +62,6 @@ class Square extends StatelessWidget {
     return piece!.iswhite ? piece!.imagepathw : piece!.imagepathb;
   }
 }
+
+
+
