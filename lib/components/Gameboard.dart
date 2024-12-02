@@ -509,13 +509,7 @@ class _BoardState extends State<Board> {
 
     return invalidMoves;
   }
-
-  // Helper function to check if a position is within the board
-  bool isInBoard(int row, int col) {
-    return row >= 0 && row < 8 && col >= 0 && col < 8;
-  }
-
-  @override
+@override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -615,10 +609,4 @@ class _BoardState extends State<Board> {
     );
   }
 
-  // Helper function to determine square color
-  bool isWhite(int index) {
-    int row = index ~/ 8;
-    int col = index % 8;
-    return (row + col) % 2 == 0;
-  }
 }
