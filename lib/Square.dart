@@ -13,37 +13,30 @@ class Square extends StatelessWidget {
     required this.isSelected,
     required this.isValid,
     required this.onTap,
-    this.isKingInCheck = false,        // New parameter
-    this.isInvalidKingMove = false,    // New parameter
-    this.isKingTile = false,
+       // New parameter
   }) : super(key: key);
   final bool iswhite;
   final Chesspiece? piece;
   final bool isSelected;
   final bool isValid;
   final void Function()? onTap;
-final bool isKingInCheck;
-  final bool isInvalidKingMove;
-  final bool isKingTile;
+
+  // final bool isInvalidKingMove;
+
   @override
   Widget build(BuildContext context) {
     Color? squarecolor;
 
-    // Highlight king's tile in red if in check
-    if (isKingTile && isKingInCheck) {
-      squarecolor = Colors.red;
-    }
-    // Highlight invalid king moves in red
-    else if (isInvalidKingMove) {
-      squarecolor = Colors.red.withOpacity(0.5);
-    }
     // Highlight selected squares
-    else if (isSelected) {
+    if (isSelected) {
       squarecolor = Colors.green;
     }
     // Highlight valid move squares
     else if (isValid) {
       squarecolor = const Color.fromARGB(255, 2, 80, 4);
+    }
+    else if (!isValid) {
+      squarecolor = const Color.fromARGB(255, 228, 58, 7);
     }
     // Default square colors
     else {
