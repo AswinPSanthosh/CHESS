@@ -510,6 +510,12 @@ bool simulateMovesSafe(
             
                     bool isSelected = selectedRow == row && selectedCol == col;
             
+
+
+//king is in check or not
+             bool isKingInCheck = checkStatus &&
+                      ((isWhiteturn && whiteKing[0] == row && whiteKing[1] == col) ||
+                          (!isWhiteturn && blackKing[0] == row && blackKing[1] == col));
                     bool isValidmove = false;
                     for (var position in validMoves) {
                       if (position[0] == row && position[1] == col) {
@@ -519,11 +525,12 @@ bool simulateMovesSafe(
                     return Padding(
                       padding: const EdgeInsets.all(1.0),
                       child: Square(
-                          iswhite: isWhite(index),
-        piece: board[row][col],
-        isSelected:isSelected,
-        isValid: isValidmove,
-        onTap: () => pieceSelected(row, col)),
+                           iswhite: isWhite(index),
+                      piece: board[row][col],
+                      isSelected: isSelected,
+                      isValid: isValidmove,
+                      isKingInCheck: isKingInCheck,
+                      onTap: () => pieceSelected(row, col)),
                     );
                   },
                 ),
