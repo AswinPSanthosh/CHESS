@@ -35,9 +35,6 @@ class Square extends StatelessWidget {
     else if (isValid) {
       squarecolor = const Color.fromARGB(255, 2, 80, 4);
     }
-    else if (!isValid) {
-      squarecolor = const Color.fromARGB(255, 228, 58, 7);
-    }
     // Default square colors
     else {
       squarecolor = iswhite ? squireWhite : squireBlack;
