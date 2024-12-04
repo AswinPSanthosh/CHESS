@@ -367,6 +367,7 @@ List<List<int>> realValidmoves(int row, int col, Chesspiece? piece, bool checkSi
 
 
   void movePiece(int newRow, int newCol) {
+    
     if (board[newRow][newCol] != null) {
       Chesspiece capturedPiece = board[newRow][newCol]!;
       if (capturedPiece.iswhite) {
@@ -395,9 +396,30 @@ List<List<int>> realValidmoves(int row, int col, Chesspiece? piece, bool checkSi
       selectedCol = -1;
       validMoves = [];
     });
-
+if (checkmate(!isWhiteturn)) {
+      showDialog(context: context, builder: (context)=>AlertDialog(title: Text('checkmate'),actions: [TextButton(onPressed: (){}, child: Text('restart'))],));
+    }
+    
     isWhiteturn = !isWhiteturn;
   }
+//reset the game
+void restart(){
+  Navigator.pop(context);
+  _initialiseBoard();
+  checkStatus=false;
+  whitePieceCaptured.clear();
+  blackPieceCaptured.clear();
+whiteKing = [7, 3];
+blackKing = [0, 4];
+selectedRow = -1;
+selectedCol = -1;
+isWhiteturn = true;
+setState(() {
+  
+});
+}
+
+
 
 bool isKingCheck(bool isWhiteKing) {
     List<int> kingPosition = isWhiteKing ? whiteKing : blackKing;
@@ -448,7 +470,25 @@ bool simulateMovesSafe(
   }
 
 
-
+//checkmate
+bool checkmate(bool isWhiteKing){
+if (!isKingCheck(isWhiteKing)) {
+  return false;
+}
+for (var i = 0; i < 8; i++) {
+  for (var j = 0; j < 8; j++) {
+    if(board[i][j]==null|| board[i][j]!.iswhite!=isWhiteKing){
+      continue;
+    }
+    List<List<int>> pieceValidmoves = realValidmoves(i, j, board[i][j], true);
+    if (pieceValidmoves.isNotEmpty) {
+      return false;
+      
+    }
+  }
+}
+return true;
+}
 
 
   @override
