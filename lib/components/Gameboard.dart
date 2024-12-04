@@ -58,26 +58,6 @@ List<List<int>> realValidmoves(int row, int col, Chesspiece? piece, bool checkSi
     return candidateMoves;
   }
 
-// List<List<int>> realValidmoves(int row, int col, Chesspiece? piece, bool checkSimulation) {
-//   List<List<int>> realValidMoves = [];
-//   List<List<int>> candidateMoves = rowValidmoves(row, col, piece);
-
-//   if (checkSimulation) {
-//     for (var move in candidateMoves) {
-//       int endRow = move[0];
-//       int endCol = move[1];
-//       if (simulateMovesSafe(piece!, row, col, endRow, endCol)) {
-//         realValidMoves.add(move);
-//       }
-//     }
-//   } else {
-//     realValidMoves = candidateMoves;
-//   }
-
-//   return realValidMoves;
-// }
-
-
 
 // calculate row valid moves
   List<List<int>> rowValidmoves(int row, int col, Chesspiece? piece) {
