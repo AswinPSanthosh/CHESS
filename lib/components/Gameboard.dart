@@ -83,6 +83,7 @@ void showEndGameDialog(String message) {
             onPressed: () {
               Navigator.of(context).pop();
               _initialiseBoard();
+              restart();
             },
             child: const Text("Restart"),
           ),
