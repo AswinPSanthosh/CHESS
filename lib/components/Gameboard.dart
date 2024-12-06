@@ -443,9 +443,7 @@ List<List<int>> realValidmoves(int row, int col, Chesspiece? piece, bool checkSi
 if (checkmate(!isWhiteturn)) {
        
 
-showDialog(context: context, builder: (context)=>AlertDialog(title: Text('Checkmate! ${isWhiteturn ? 'White' : 'Black'} wins!'),actions: [TextButton(onPressed: (){
-        restart();
-      }, child: Text('restart'))],));
+showEndGameDialog('Checkmate! ${isWhiteturn ? 'White' : 'Black'} wins!');
 
 
 
