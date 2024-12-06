@@ -82,7 +82,6 @@ void showEndGameDialog(String message) {
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
-              _initialiseBoard();
               restart();
             },
             child: const Text("Restart"),
