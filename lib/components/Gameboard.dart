@@ -29,25 +29,69 @@ class _BoardState extends State<Board> {
   }
 
 void pieceSelected(int row, int col) {
-    setState(() {
-      if (selectedPiece == null && board[row][col] != null) {
-        if (board[row][col]!.iswhite == isWhiteturn) {
-          selectedPiece = board[row][col];
-          selectedRow = row;
-          selectedCol = col;
-          validMoves = realValidmoves(selectedRow, selectedCol, selectedPiece, true);
-        }
-      } else if (board[row][col] != null && board[row][col]!.iswhite == selectedPiece!.iswhite) {
+  setState(() {
+    if (selectedPiece == null && board[row][col] != null) {
+      if (board[row][col]!.iswhite == isWhiteturn) {
         selectedPiece = board[row][col];
         selectedRow = row;
         selectedCol = col;
         validMoves = realValidmoves(selectedRow, selectedCol, selectedPiece, true);
-      } else if (selectedPiece != null &&
-          validMoves.any((move) => move[0] == row && move[1] == col)) {
-        movePiece(row, col);
       }
-    });
+    } else if (board[row][col] != null && board[row][col]!.iswhite == selectedPiece!.iswhite) {
+      selectedPiece = board[row][col];
+      selectedRow = row;
+      selectedCol = col;
+      validMoves = realValidmoves(selectedRow, selectedCol, selectedPiece, true);
+    } else if (selectedPiece != null &&
+        validMoves.any((move) => move[0] == row && move[1] == col)) {
+      movePiece(row, col);
+
+    }
+  });
+}
+
+// Function to check for stalemate
+bool stalemate(bool isWhite) {
+  // Check if the king is not in check
+  if (isKingCheck(isWhite)) return false;
+
+  // Check if there are any valid moves for any piece
+  for (int row = 0; row < 8; row++) {
+    for (int col = 0; col < 8; col++) {
+      Chesspiece? piece = board[row][col];
+      if (piece != null && piece.iswhite == isWhite) {
+        List<List<int>> moves = realValidmoves(row, col, piece, true);
+        if (moves.isNotEmpty) return false;
+      }
+    }
   }
+
+  return true; // No moves left, and king is not in check
+}
+
+
+
+// Show an endgame dialog
+void showEndGameDialog(String message) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              _initialiseBoard();
+            },
+            child: const Text("Restart"),
+          ),
+        ],
+      );
+    },
+  );
+}
+
 List<List<int>> realValidmoves(int row, int col, Chesspiece? piece, bool checkSimulation) {
     List<List<int>> candidateMoves = rowValidmoves(row, col, piece);
     if (checkSimulation) {
@@ -397,8 +441,17 @@ List<List<int>> realValidmoves(int row, int col, Chesspiece? piece, bool checkSi
       validMoves = [];
     });
 if (checkmate(!isWhiteturn)) {
-      showDialog(context: context, builder: (context)=>AlertDialog(title: Text('checkmate'),actions: [TextButton(onPressed: (){}, child: Text('restart'))],));
-    }
+       
+
+showDialog(context: context, builder: (context)=>AlertDialog(title: Text('Checkmate! ${isWhiteturn ? 'White' : 'Black'} wins!'),actions: [TextButton(onPressed: (){
+        restart();
+      }, child: Text('restart'))],));
+
+
+
+      } else if (stalemate(!isWhiteturn)) {
+        showEndGameDialog("Ooops It's a draw!");
+      }
     
     isWhiteturn = !isWhiteturn;
   }
