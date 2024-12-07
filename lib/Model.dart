@@ -3,6 +3,8 @@
 
 
 
+import 'package:flutter/material.dart';
+
 isWhite(int index){
 int x = index~/8;
 int y = index%8;
@@ -15,3 +17,19 @@ bool isInBoard(int row , int col){
 
 
 }
+
+//text style 
+TextStyle top_text = TextStyle(
+color: Colors.white,
+fontSize: 30,
+fontFamily: 'Roboto',
+fontWeight: FontWeight.w700,
+letterSpacing: 0.30,
+);
+TextStyle button = TextStyle(
+color: Colors.white,
+fontSize: 20,
+fontFamily: 'Roboto',
+fontWeight: FontWeight.w700,
+
+);
