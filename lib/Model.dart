@@ -1,8 +1,4 @@
-
-
-
-
-
+import 'package:chess/components/colors.dart';
 import 'package:flutter/material.dart';
 
 isWhite(int index){
@@ -17,6 +13,22 @@ bool isInBoard(int row , int col){
 
 
 }
+
+
+//button
+ButtonStyle elevatedButtonStyle() {
+  return ElevatedButton.styleFrom(
+    backgroundColor: button_color,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(13),
+    ),
+    padding: EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+    shadowColor: Color(0x3F000000), 
+     minimumSize: Size(305, 56), 
+    elevation: 4, // Shadow elevation
+  );
+}
+
 
 //text style 
 TextStyle top_text = TextStyle(
