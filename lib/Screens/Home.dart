@@ -1,11 +1,12 @@
 import 'package:chess/Model.dart';
+import 'package:chess/components/Gameboard.dart';
 import 'package:flutter/material.dart';
 
 // Define button style and text style for reuse
 
 
 
-class MyApp extends StatelessWidget {
+class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -43,7 +44,10 @@ class MyApp extends StatelessWidget {
                   SizedBox(height: 40),
                   ElevatedButton(
                     onPressed: () {
-                      // Your action here
+                     Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Board()),
+                      );
                     },
                     style: elevatedButtonStyle(), // Apply the button style
                     child: Row(
@@ -92,8 +96,4 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
-}
-
-void main() {
-  runApp(MyApp());
 }
