@@ -1,26 +1,25 @@
 import 'package:chess/Screens/Home.dart';
 import 'package:chess/Screens/Starting.dart';
-import 'package:chess/components/Gameboard.dart';
+import 'package:chess/Screens/profile.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   
-  runApp(const MyApp());
+  runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        primarySwatch: Colors.blue,
       ),
-      home:  Home(),
+      home: const Home(title: 'Flutter Demo Home Page'),
     );
   }
 }

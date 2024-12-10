@@ -1,4 +1,4 @@
-import 'package:chess/Model.dart';
+import 'package:chess/components/Model.dart';
 import 'package:chess/components/Square.dart';
 import 'package:chess/components/chesspiece.dart';
 import 'package:chess/components/colors.dart';

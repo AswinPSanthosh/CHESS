@@ -63,6 +63,7 @@ flutter:
   assets:
     - assets/pieces/
     - assets/other/
+    - assets/Avatar/
 
   #   - images/a_dot_ham.jpeg
 

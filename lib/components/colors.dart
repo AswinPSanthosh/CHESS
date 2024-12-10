@@ -7,3 +7,4 @@ Color button_color = Color(0xFFA47449);
 Color validmovecolor = Colors.green;
 Color capturecolor = Colors.red;
 Color selectcolor = const Color.fromARGB(255, 34, 114, 37);
+Color darkborder = Color(0xFF432F1E);

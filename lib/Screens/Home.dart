@@ -1,25 +1,37 @@
-import 'package:chess/Model.dart';
+import 'package:chess/Screens/widgets.dart';
+import 'package:chess/components/Model.dart';
 import 'package:chess/components/Gameboard.dart';
 import 'package:flutter/material.dart';
 
-// Define button style and text style for reuse
-
-
 
 class Home extends StatelessWidget {
+  const Home({Key? key, required this.title}) : super(key: key);
+
+  final String title;
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Stack(
-          children: [
-            Positioned.fill(
-              child: Image.asset(
-                'assets/other/bg1.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-            Center(
+    return Scaffold(
+
+body: Stack(
+  children: [
+     Image.asset(
+            'assets/other/bg1.png',
+            fit: BoxFit.cover,
+            width: double.infinity,
+            height: double.infinity,
+          ),
+     myAppBar(
+            title: 'Your Title',
+            onMedalPressed: () {
+              
+            },
+            onSettingsPressed: () {
+              
+            },
+          ),
+    
+     Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -28,7 +40,7 @@ class Home extends StatelessWidget {
                     onPressed: () {
                       // Your action here
                     },
-                    style: elevatedButtonStyle(), // Apply the button style
+                    style: longButtonStyle(), // Apply the button style
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -49,7 +61,7 @@ class Home extends StatelessWidget {
                         MaterialPageRoute(builder: (context) => Board()),
                       );
                     },
-                    style: elevatedButtonStyle(), // Apply the button style
+                    style: longButtonStyle(), // Apply the button style
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -91,9 +103,12 @@ class Home extends StatelessWidget {
                 ),
               ),
             ),
-          ],
-        ),
-      ),
+  ],
+)
+,
+
     );
   }
 }
+
+

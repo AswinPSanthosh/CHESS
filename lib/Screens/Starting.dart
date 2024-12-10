@@ -1,4 +1,4 @@
-import 'package:chess/Model.dart';
+import 'package:chess/components/Model.dart';
 import 'package:chess/components/colors.dart';
 import 'package:flutter/material.dart';
 

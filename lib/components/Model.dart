@@ -14,9 +14,20 @@ bool isInBoard(int row , int col){
 
 }
 
+ButtonStyle customButtonStyle() {
+  return ElevatedButton.styleFrom(
+    fixedSize: const Size(150, 40), // Set button size
+    backgroundColor: const Color(0xFF63462C), // Background color
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(50), // Rounded corners
+    ),
+    padding: const EdgeInsets.all(10), // Internal padding
+  );
+}
+
 
 //button
-ButtonStyle elevatedButtonStyle() {
+ButtonStyle longButtonStyle() {
   return ElevatedButton.styleFrom(
     backgroundColor: button_color,
     shape: RoundedRectangleBorder(
