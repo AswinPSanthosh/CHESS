@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "925756921213",
+    "project_id": "chess-c3dc3",
+    "storage_bucket": "chess-c3dc3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925756921213:android:43f20c646cb881b336a814",
+        "android_client_info": {
+          "package_name": "com.example.chess"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCym_gtRTtFb-dSl77ho8IhAU9vOysAfmQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
